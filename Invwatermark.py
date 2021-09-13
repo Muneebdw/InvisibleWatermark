@@ -4,7 +4,7 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
 from tkinter import filedialog
-class Steganography(object):
+class Image_Engine(object):
 
     def __int_to_bin(rgb):
         #Change RGB (Values) to binary
@@ -46,19 +46,19 @@ class Steganography(object):
 
         for i in range(img1.size[0]):
             for j in range(img1.size[1]):
-                rgb1 = Steganography.__int_to_bin(pixel_map1[i, j])
+                rgb1 = Image_Engine.__int_to_bin(pixel_map1[i, j])
 
                 # Use a black pixel as default
-                rgb2 = Steganography.__int_to_bin((0, 0, 0))
+                rgb2 = Image_Engine.__int_to_bin((0, 0, 0))
 
                 # Check if the pixel map position is valid for the second PIL.Image
                 if i < img2.size[0] and j < img2.size[1]:
-                    rgb2 = Steganography.__int_to_bin(pixel_map2[i, j])
+                    rgb2 = Image_Engine.__int_to_bin(pixel_map2[i, j])
 
                 # Merge the two pixels and convert it to a integer tuple
-                rgb = Steganography.__merge_rgb(rgb1, rgb2)
+                rgb = Image_Engine.__merge_rgb(rgb1, rgb2)
 
-                pixels_new[i, j] = Steganography.__bin_to_int(rgb)
+                pixels_new[i, j] = Image_Engine.__bin_to_int(rgb)
 
         return new_image
 
@@ -79,7 +79,7 @@ class Steganography(object):
         for i in range(img.size[0]):
             for j in range(img.size[1]):
                 # Get the RGB (as a string tuple) from the current pixel
-                r, g, b = Steganography.__int_to_bin(pixel_map[i, j])
+                r, g, b = Image_Engine.__int_to_bin(pixel_map[i, j])
 
                 # Extract the last 4 bits (corresponding to the hidden PIL.Image)
                 # Concatenate 4 zero bits because we are working with 8 bit
@@ -88,7 +88,7 @@ class Steganography(object):
                        b[4:] + '0000')
 
                 # Convert it to an integer tuple
-                pixels_new[i, j] = Steganography.__bin_to_int(rgb)
+                pixels_new[i, j] = Image_Engine.__bin_to_int(rgb)
 
                 # If this is a 'valid' position, store it
                 # as the last valid position
@@ -129,13 +129,13 @@ if __name__ == '__main__':
     def encodeb():
         print(secretname)
         print(hostname)
-        merge = Steganography.merge(PIL.Image.open(str(hostname)),PIL.Image.open(str(secretname)))
+        merge = Image_Engine.merge(PIL.Image.open(str(hostname)),PIL.Image.open(str(secretname)))
         merge.save('encoded_i.png')
     
     #function to call unmerge method
     def decode():
         print(decodename)
-        unmerg = Steganography.unmerge(PIL.Image.open(str(decodename)))
+        unmerg = Image_Engine.unmerge(PIL.Image.open(str(decodename)))
         unmerg.save('decoded_i.png')
 
 
