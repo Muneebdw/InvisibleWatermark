@@ -1,9 +1,11 @@
 import click
 import PIL.Image
 from tkinter import *
+import cv2 as cv
 from tkinter import filedialog
 from tkinter import ttk
 from tkinter import filedialog
+import numpy
 class Image_Engine(object):
 
     def __int_to_bin(rgb):
@@ -106,6 +108,9 @@ hostname=""
 secretname=""
 decodename=""
 
+def subtract(img1,img2):
+    image3 = cv.subtract(img1,img2)
+
 if __name__ == '__main__':
     #GUI initiated
     interface = Tk()
@@ -131,6 +136,9 @@ if __name__ == '__main__':
         print(hostname)
         merge = Image_Engine.merge(PIL.Image.open(str(hostname)),PIL.Image.open(str(secretname)))
         merge.save('encoded_i.png')
+        #converting PIL image to openCV format
+        subtract(cv.imread(hostname),cv.imread(secretname))
+        opencvImage = cv.cvtColor(numpy.array(merge), cv.COLOR_RGB2BGR)
     
     #function to call unmerge method
     def decode():
